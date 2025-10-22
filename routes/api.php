@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TicketController;
 
 Route::prefix('v1')->group(function () {
     Route::controller(AuthController::class)->group(function () {
@@ -12,5 +13,7 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function() {
         Route::post('logout', [AuthController::class, 'logout']);
+
+        Route::apiResource('tickets', TicketController::class);
     });
 });
