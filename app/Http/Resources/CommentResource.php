@@ -11,11 +11,12 @@ class CommentResource extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'comment'    => $this->comment,
             'user'       => [
                 'id'   => $this->user->id,
                 'name' => $this->user->name,
             ],
+            'ticket_id' => $this->ticket_id,
+            'comment'    => $this->comment,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }
