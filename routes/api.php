@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CommentController;
 
@@ -17,5 +18,6 @@ Route::prefix('v1')->group(function () {
 
         Route::apiResource('tickets', TicketController::class);
         Route::apiResource('comments', CommentController::class)->except(['index', 'show']);
+        Route::apiResource('chats', ChatController::class)->except(['index', 'show']);
     });
 });
