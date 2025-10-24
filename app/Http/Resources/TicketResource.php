@@ -23,6 +23,7 @@ class TicketResource extends JsonResource
                 'email'=> $this->user->email,
             ],
             'comments'    => CommentResource::collection($this->whenLoaded('comments')),
+            'chats'       => ChatResource::collection($this->whenLoaded('chats')),
             'created_at'  => $this->created_at->diffForHumans(),
             'created_at'  => $this->created_at->diffForHumans(),
             // 'updated_at'  => $this->updated_at->format('Y-m-d H:i:s'),

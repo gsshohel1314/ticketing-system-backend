@@ -17,7 +17,8 @@ class CommentResource extends JsonResource
             ],
             'ticket_id' => $this->ticket_id,
             'comment'    => $this->comment,
-            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            // 'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'created_at'  => $this->created_at->diffForHumans(),
         ];
     }
 }

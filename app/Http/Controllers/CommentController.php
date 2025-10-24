@@ -25,13 +25,13 @@ class CommentController extends Controller
             ]);
 
             return $this->successResponse(
+                'Comment added successfully.',
                 new CommentResource($comment),
-                'Comment added successfully.'
             );
         } catch (\Throwable $t) {
             return $this->errorResponse(
-                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 'Failed to add comment.',
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 500
             );
         }
@@ -53,13 +53,13 @@ class CommentController extends Controller
             ]);
 
             return $this->successResponse(
+                'Comment updated successfully.',
                 new CommentResource($comment),
-                'Comment updated successfully.'
             );
         } catch (\Throwable $t) {
             return $this->errorResponse(
-                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 'Failed to update comment.',
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 500
             );
         }
@@ -74,11 +74,11 @@ class CommentController extends Controller
         try {
             $comment->delete();
 
-            return $this->successResponse([], 'Comment deleted successfully.');
+            return $this->successResponse('Comment deleted successfully.', []);
         } catch (\Throwable $t) {
             return $this->errorResponse(
-                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 'Failed to delete comment.',
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 500
             );
         }

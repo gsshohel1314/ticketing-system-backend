@@ -18,7 +18,8 @@ class ChatResource extends JsonResource
             ],
             'message'   => $this->message,
             'is_read'   => (bool) $this->is_read,
-            'created_at'=> $this->created_at->format('Y-m-d H:i:s'),
+            // 'created_at'=> $this->created_at->format('Y-m-d H:i:s'),
+            'created_at'  => $this->created_at->diffForHumans(),
         ];
     }
 }

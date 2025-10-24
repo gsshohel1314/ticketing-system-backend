@@ -77,7 +77,7 @@ class TicketController extends Controller
     public function show(Ticket $ticket): JsonResponse
     {
         try {
-            $ticket->load('comments');
+            $ticket->load('comments', 'chats');
 
             return $this->successResponse(
                 'Ticket fetched successfully.',

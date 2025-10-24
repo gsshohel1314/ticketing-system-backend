@@ -29,15 +29,15 @@ class ChatController extends Controller
             DB::commit();
 
             return $this->successResponse(
+                'Message sent successfully.',
                 new ChatResource($chat),
-                'Message sent successfully.'
             );
         } catch (\Throwable $t) {
             DB::rollBack();
 
             return $this->errorResponse(
-                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 'Failed to send message.',
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 500
             );
         }
@@ -59,13 +59,13 @@ class ChatController extends Controller
             ]);
 
             return $this->successResponse(
+                'Message updated successfully.',
                 new ChatResource($chat),
-                'Message updated successfully.'
             );
         } catch (\Throwable $t) {
             return $this->errorResponse(
-                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 'Failed to update message.',
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 500
             );
         }
@@ -80,11 +80,11 @@ class ChatController extends Controller
         try {
             $chat->delete();
 
-            return $this->successResponse([], 'Message deleted successfully.');
+            return $this->successResponse('Message deleted successfully.', []);
         } catch (\Throwable $t) {
             return $this->errorResponse(
-                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 'Failed to delete message.',
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 500
             );
         }
