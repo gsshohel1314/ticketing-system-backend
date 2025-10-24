@@ -36,17 +36,23 @@ class AuthController extends Controller
 
             DB::commit();
 
-            return $this->successResponse([
-                'token' => $token,
-                'token_type' => 'Bearer',
-                'user'  => $user,
-            ], 'Registration successful.');
+            return $this->successResponse(
+                'Registration successful.',
+                [
+                    'token' => $token,
+                    'token_type' => 'Bearer',
+                    'user'  => $user,
+                ],
+                200
+            );
         } catch (\Throwable $t) {
             DB::rollBack();
 
-            return $this->errorResponse('Registration failed.', [
-                'error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'
-            ], 500);
+            return $this->errorResponse(
+                'Registration failed.',
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'], 
+                500
+            );
         }
     }
 
@@ -71,15 +77,21 @@ class AuthController extends Controller
             // Create Sanctum token
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            return $this->successResponse([
-                'token' => $token,
-                'token_type' => 'Bearer',
-                'user'  => $user,
-            ], 'Login successful.');
+            return $this->successResponse(
+                'Login successful.',
+                [
+                    'token' => $token,
+                    'token_type' => 'Bearer',
+                    'user'  => $user,
+                ],
+                200
+            );
         } catch (\Throwable $t) {
-            return $this->errorResponse('Login failed.', [
-                'error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'
-            ], 500);
+            return $this->errorResponse(
+                'Login failed.', 
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'], 
+                500
+            );
         }
     }
 
@@ -89,11 +101,13 @@ class AuthController extends Controller
             // Delete the current access token
             $request->user()->currentAccessToken()->delete();
 
-            return $this->successResponse([], 'Logout successful.');
+            return $this->successResponse('Logout successful.', [], 200);
         } catch (\Throwable $t) {
-            return $this->errorResponse('Logout failed.', [
-                'error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'
-            ], 500);
+            return $this->errorResponse(
+                'Logout failed.', 
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'], 
+                500
+            );
         }
     }
 }
