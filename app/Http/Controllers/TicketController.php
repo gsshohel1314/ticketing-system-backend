@@ -21,12 +21,12 @@ class TicketController extends Controller
         try {
             $tickets = Ticket::with('comments')
                 ->where('user_id', Auth::id())
-                ->latest()
-                ->paginate(5);
+                ->orderBy('id', 'DESC')
+                ->get();
 
             return $this->successResponse(
-                TicketResource::collection($tickets)->response()->getData(true),
-                'Tickets fetched successfully.'
+                'Tickets fetched successfully.',
+                TicketResource::collection($tickets)->response()->getData(true)
             );
         } catch (\Throwable $t) {
             return $this->errorResponse(
@@ -62,13 +62,13 @@ class TicketController extends Controller
 
             DB::commit();
 
-            return $this->successResponse($ticket, 'Ticket created successfully.');
+            return $this->successResponse('Ticket created successfully.', $ticket);
         } catch (\Throwable $t) {
             DB::rollBack();
             
             return $this->errorResponse(
-                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 'Failed to create ticket.',
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 500
             );
         }
@@ -80,13 +80,13 @@ class TicketController extends Controller
             $ticket->load('comments');
 
             return $this->successResponse(
-                new TicketResource($ticket),
                 'Ticket fetched successfully.',
+                new TicketResource($ticket),
             );
         } catch (\Throwable $t) {
             return $this->errorResponse(
-                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 'Failed to fetch tickets.',
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 500
             );
         }
@@ -117,13 +117,13 @@ class TicketController extends Controller
 
             DB::commit();
 
-            return $this->successResponse($ticket, 'Ticket updated successfully.');
+            return $this->successResponse('Ticket updated successfully.', $ticket);
         } catch (\Throwable $t) {
             DB::rollBack();
 
             return $this->errorResponse(
-                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 'Failed to update ticket.',
+                ['error' => config('app.debug') ? $t->getMessage() : 'Something went wrong.'],
                 500
             );
         }
