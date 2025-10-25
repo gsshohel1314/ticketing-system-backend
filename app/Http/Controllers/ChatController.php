@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Events\MessageSent;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +28,9 @@ class ChatController extends Controller
             ]);
 
             DB::commit();
+
+            // Event broadcasting
+            event(new MessageSent(new ChatResource($chat)));
 
             return $this->successResponse(
                 'Message sent successfully.',

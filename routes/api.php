@@ -13,6 +13,17 @@ Route::prefix('v1')->group(function () {
         Route::post('login', 'login');
     });
 
+    // Set Up Pusher Authentication Endpoint
+    Route::post('/pusher/auth', function (Request $request) {
+        $pusher = new \Pusher\Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            ['cluster' => env('PUSHER_APP_CLUSTER'), 'useTLS' => true]
+        );
+        return $pusher->socket_auth($request->channel_name, $request->socket_id);
+    })->middleware('auth:sanctum');
+
     Route::middleware('auth:sanctum')->group(function() {
         Route::post('logout', [AuthController::class, 'logout']);
 

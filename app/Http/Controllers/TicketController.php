@@ -19,10 +19,13 @@ class TicketController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $tickets = Ticket::with('comments')
-                ->where('user_id', Auth::id())
-                ->orderBy('id', 'DESC')
-                ->get();
+            $query = Ticket::with('comments')->orderBy('id', 'DESC');
+
+            if (Auth::user()->role !== 'admin') {
+                $query->where('user_id', Auth::id());
+            }
+
+            $tickets = $query->get();
 
             return $this->successResponse(
                 'Tickets fetched successfully.',
