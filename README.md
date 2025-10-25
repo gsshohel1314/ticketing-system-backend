@@ -1,60 +1,69 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Customer Support Ticketing System - Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is the backend for a Customer Support Ticketing System built with **Laravel**. It provides a REST API for user authentication, ticket management, commenting, and real-time chat functionality using Pusher. The system supports two roles: Admin and Customer, with MySQL as the database.
 
-## About Laravel
+## Features
+- **Authentication**: Token-based (Laravel Sanctum) with registration, login, and logout.
+- **Roles**: Admin (view all tickets) and Customer (view own tickets).
+- **Tickets**: CRUD operations with fields: Subject, Description, Category, Priority, Attachment, Status (Open, In Progress, Resolved, Closed).
+- **Comments**: Both Admins and Customers can comment on tickets.
+- **Real-Time Chat**: Linked to tickets, powered by Pusher.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Prerequisites
+- PHP >= 8.2
+- Composer
+- MySQL
+- Node.js & npm (for Pusher setup)
+- Pusher account (for real-time chat)
+- Git
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
+1. **Clone the Repository**:
+    ```bash
+    HTTPS: git clone https://github.com/gsshohel1314/ticketing-system-backend.git
+    SSH: git clone git@github.com:gsshohel1314/ticketing-system-backend.git
+    cd ticketing-system-backend
+2. **Install Dependencies**:
+    ```bash
+    composer install
+3. **Environment Setup**:
+    ```bash
+    cp .env.example .env
+4. **Update .env**:
+    ```bash
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=ticket_system
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    QUEUE_CONNECTION=sync
+    BROADCAST_CONNECTION=pusher
+    BROADCAST_DRIVER=pusher
+    PUSHER_APP_ID=your_pusher_app_id
+    PUSHER_APP_KEY=your_pusher_key
+    PUSHER_APP_SECRET=your_pusher_secret
+    PUSHER_APP_CLUSTER=your_pusher_cluster
+5. **Generate Application Key**:
+    ```bash
+    php artisan key:generate
+6. **Run Migrations**:
+    ```bash
+    php artisan migrate
+7. **Seed Database (Optional)**:
+    ```bash
+    php artisan db:seed
+8. **Start the Server**:
+    ```bash
+    php artisan serve
+    ```
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Real-Time Chat
+- **Technology**: Pusher is used for real-time messaging.
+- **Channel**: Messages are broadcasted to ticket.{ticket_id} channels.
+- **Setup**: Ensure Pusher credentials are set in .env.
+- **Event**: MessageSent event triggers real-time updates.
 
 ## License
 
